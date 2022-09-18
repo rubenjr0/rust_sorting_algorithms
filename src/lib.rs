@@ -41,3 +41,30 @@ pub fn bubble_sort(v: &mut Vec<usize>) {
         }
     }
 }
+
+pub fn partition_at(v: &Vec<usize>, pivot: usize) -> (Vec<usize>, Vec<usize>) {
+    let (mut left, right): (Vec<usize>, Vec<usize>) = v.iter().partition(|&x| x <= &pivot);
+    let pivot_idx = left.iter().position(|&x| x == pivot).unwrap();
+    left.remove(pivot_idx);
+    (left, right)
+}
+
+#[inline]
+pub fn quick_sort(v: &mut Vec<usize>) {
+    let n = v.len();
+    if n > 2 {
+        let pivot = (v[0] + v[n / 2] + v[n - 1]) / 3;
+        let (mut left, mut right) = partition_at(v, pivot);
+        quick_sort(&mut left);
+        quick_sort(&mut right);
+        left.push(pivot);
+        left.append(&mut right);
+        *v = left;
+    } else if n == 2 {
+        if v[1] < v[0] {
+            let temp = v[1];
+            v[1] = v[0];
+            v[0] = temp;
+        }
+    }
+}
