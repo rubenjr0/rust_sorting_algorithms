@@ -3,3 +3,4 @@ Implemented algorithms:
 - Selection sort
 - Insertion sort
 - Bubble sort
+- Quick sort
